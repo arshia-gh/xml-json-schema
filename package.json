@@ -1,0 +1,72 @@
+{
+	"name": "xml-json-schema",
+	"version": "1.0.0",
+	"description": "Parse XML documents with JSON schema in TypeScript",
+	"main": "dist/main.js",
+	"types": "dist/main.d.ts",
+	"type": "module",
+	"scripts": {
+		"test": "vitest",
+		"coverage": "vitest run --coverage",
+		"build": "tsc --project tsconfig.build.json",
+		"prepublish": "npm run build",
+		"lint": "eslint .",
+		"format": "prettier --write .",
+		"prepare": "husky",
+		"commitlint": "commitlint --edit "
+	},
+	"keywords": [
+		"typescript",
+		"template",
+		"library"
+	],
+	"author": {
+		"email": "arshiagh.dev@gmail.com",
+		"url": "https://arshiagh.dev",
+		"name": "Arshia Gh"
+	},
+	"repository": {
+		"url": "https://github.com/arshia-gh/xml-json-schema",
+		"type": "git"
+	},
+	"bugs": {
+		"url": "https://github.com/arshia-gh/xml-json-schema/issues"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"@sinclair/typebox": "^0.32.30"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.3.0",
+		"@commitlint/config-conventional": "^19.2.2",
+		"@eslint/js": "^9.2.0",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "^10.0.3",
+		"@tsconfig/strictest": "^2.0.5",
+		"@types/jsdom": "^21.1.6",
+		"@types/json-schema": "^7.0.15",
+		"@vitest/coverage-istanbul": "^1.6.0",
+		"eslint": "^9.2.0",
+		"eslint-config-prettier": "^9.1.0",
+		"globals": "^15.1.0",
+		"husky": "^9.0.11",
+		"jsdom": "^24.0.0",
+		"lint-staged": "^15.2.2",
+		"prettier": "^3.2.5",
+		"semantic-release": "^23.0.8",
+		"ts-morph": "^22.0.0",
+		"tsx": "^4.9.3",
+		"typescript": "^5.4.5",
+		"typescript-eslint": "^7.8.0",
+		"vitest": "^1.6.0"
+	},
+	"lint-staged": {
+		"src/**/*.{js,ts}": [
+			"eslint --fix"
+		],
+		"src/**/*.{test,spec}.{js,ts}": [
+			"prettier --write"
+		],
+		"**/*": "prettier --write --ignore-unknown"
+	}
+}
