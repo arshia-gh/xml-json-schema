@@ -1,6 +1,6 @@
 {
 	"name": "xml-json-schema",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Parse XML documents with JSON schema in TypeScript",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
