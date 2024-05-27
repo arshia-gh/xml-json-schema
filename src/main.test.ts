@@ -90,4 +90,51 @@ describe('Parser', () => {
 
 		expect(() => parser.parse(data.invalid, schema)).toThrowError();
 	});
+
+	it("shouldn't parse Optional fields if they are missing", () => {
+		const schema = Type.Object({
+			address: Type.Optional(
+				Type.Object({
+					street: Type.String(),
+					city: Type.String(),
+					zip: Type.String(),
+				}),
+			),
+		});
+
+		const data = {
+			valid: `
+				<root>
+				</root>
+			`,
+		};
+
+		expect(parser.parse(data.valid, schema)).toEqual({
+			address: null,
+		});
+	});
+
+	it("Shouldn't parse Optional fields if they are nil", () => {
+		const schema = Type.Object({
+			address: Type.Optional(
+				Type.Object({
+					street: Type.String(),
+					city: Type.String(),
+					zip: Type.String(),
+				}),
+			),
+		});
+
+		const data = {
+			valid: `
+				<root>
+					<address nil="true" />
+				</root>
+			`,
+		};
+
+		expect(parser.parse(data.valid, schema)).toEqual({
+			address: null,
+		});
+	});
 });

@@ -194,14 +194,13 @@ export class Parser {
 		}
 
 		const alias = schema['_alias'] ?? defaultAlias;
-		const resolved = element
-			.getElementsByTagNameNS(schema['_ns'] ?? '*', alias)
-			.item(0);
+		const ns = schema['_ns'] ?? '*';
+		const resolved = element.getElementsByTagNameNS(ns, alias).item(0);
 
 		if (!resolved && schema[OptionalKind] !== 'Optional') {
 			throw new Error(
 				[
-					`Could not resolve element "${alias}" in namespace "${schema['_ns'] ?? '*'}".`,
+					`Could not resolve element "${alias}" in namespace "${ns}".`,
 					`Descendant of element "${element.tagName}".`,
 					'Ensure that the element is present in the XML document and depth of schema matches the XML document.',
 				].join(' '),
@@ -224,14 +223,18 @@ export class Parser {
 
 		const el = shouldResolve ? this.resolveElement(element, schema) : element;
 
-		return el != null
-			? parser(
-					el,
-					schema,
-					this._parseElement.bind(this),
-					this.resolveElement.bind(this),
-				)
-			: el;
+		// parse if element is present and not nil
+		if (el && !this._options.isNilElement(el)) {
+			return parser(
+				el,
+				schema,
+				this._parseElement.bind(this),
+				this.resolveElement.bind(this),
+			);
+		}
+
+		// schema optionality is checked in resolveElement function
+		return null;
 	}
 
 	public addParser(kind: string, parser: ValueParser) {
